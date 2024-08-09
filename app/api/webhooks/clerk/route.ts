@@ -56,9 +56,14 @@ export async function POST(req: Request) {
 
     //  Create User in mongodb
 
+
+
     if (eventType === "user.created") {
-        const {id, email_addresses, image_url, first_name, last_name, username} = 
-        evt.data
+        let {id, email_addresses, image_url, first_name, last_name, username} = evt.data
+        
+        if (username === null) {
+            username = getUsername(email_addresses[0].email_address)
+        }
 
         const user = {
             clerkId : id,
@@ -88,4 +93,15 @@ export async function POST(req: Request) {
     console.log('Webhook body:', body)
   
     return new Response('', { status: 200 })
+  }
+
+
+// If no username, create custom username based on Email 
+  const getUsername = (email: string) => {
+    let userName = ''
+    for (const l of email) {
+        if (l === "@") break;
+        userName += l
+    }
+    return userName
   }

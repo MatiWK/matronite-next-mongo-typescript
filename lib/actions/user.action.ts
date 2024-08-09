@@ -12,3 +12,14 @@ export async function createUser(user: IUser) {
         console.log(err)
     }
 }
+
+
+export async function getUserByMail(email: string) {
+    try {
+        await dbConnect()
+        const foundUsers = await User.find({email: {$regex : email}})
+        return JSON.parse(JSON.stringify(foundUsers))
+    } catch (error) {
+        console.log(error)
+    }
+}

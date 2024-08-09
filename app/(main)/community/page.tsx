@@ -1,15 +1,23 @@
 'use client'
+import { getUserByMail } from '@/lib/actions/user.action'
 import { Search } from 'lucide-react'
-import React, { useState } from 'react'
+import React, { SyntheticEvent, useState } from 'react'
 
 const CommunityPage = () => {
     const [creator, setCreator] = useState('')
     
+    const search = async (e: SyntheticEvent) => {
+      e.preventDefault();
+      const foundUser = await getUserByMail(creator)
+      console.log(foundUser)
+    }
 
   return (
     
     <div className=''>
         <h1 className='md:text-5xl text-3xl  my-16 font-bold text-center'>Find Your Desired Creator</h1>
+        <form onSubmit={(e) => search(e)}>
+
         <div className='flex justify-center  items-center '>
             <input 
             placeholder='Enter E-mail or Username'
@@ -18,11 +26,12 @@ const CommunityPage = () => {
             type="text" 
             value={creator} 
             />
-            <button className='py-2 px-4   rounded-r-xl bg-amber-100 text-black border-2 border-amber-100'>
+            <button type='submit' className='py-2 px-4   rounded-r-xl bg-amber-100 text-black border-2 border-amber-100'>
             <Search />
-            </button>
+            </button >
 
         </div>
+        </form>
 
     </div>
   )
