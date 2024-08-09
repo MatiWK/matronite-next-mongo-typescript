@@ -62,7 +62,7 @@ export async function POST(req: Request) {
         let {id, email_addresses, image_url, first_name, last_name, username} = evt.data
         
         if (username === null) {
-            username = getUsername(email_addresses[0].email_address)
+            username = customeUsername(email_addresses[0].email_address)
         }
 
         const user = {
@@ -97,11 +97,14 @@ export async function POST(req: Request) {
 
 
 // If no username, create custom username based on Email 
-  const getUsername = (email: string) => {
+  const customeUsername = (email: string) => {
+    const id = new Date().getTime().toString()
     let userName = ''
     for (const l of email) {
         if (l === "@") break;
         userName += l
     }
-    return userName
+    const userNameWithUniqueId = userName + id
+    
+    return userNameWithUniqueId
   }
