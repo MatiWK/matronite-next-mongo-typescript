@@ -12,7 +12,7 @@ const CommunityPage = () => {
         <h1 className='md:text-5xl text-3xl  my-16 font-bold text-center'>Find Your Desired Creator</h1>
         <div className='flex justify-center  items-center '>
             <input 
-            
+            placeholder='Enter E-mail or Username'
             onChange={(e) => setCreator(e.target.value)}
             className='focus:outline-none border-2 focus:border-black border-transparent  rounded-l-xl w-full bg-amber-200 p-2  font-bold ' 
             type="text" 

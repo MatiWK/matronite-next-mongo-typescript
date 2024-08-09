@@ -1,10 +1,8 @@
 import { Webhook } from 'svix'
 import { headers } from 'next/headers'
 import { clerkClient, WebhookEvent } from '@clerk/nextjs/server'
-// import { clerkClient } from '@clerk/nextjs'
 import { NextResponse } from 'next/server'
 import { createUser } from '@/lib/actions/user.action'
-import { Types } from 'mongoose'
 
 export async function POST(req: Request) {
 
@@ -65,7 +63,7 @@ export async function POST(req: Request) {
         const user = {
             clerkId : id,
             email: email_addresses[0].email_address,
-            username: username!,
+            username: username,
             firstName: first_name,
             lastName: last_name,
             photo: image_url
