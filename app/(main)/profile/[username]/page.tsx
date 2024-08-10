@@ -39,7 +39,7 @@ const Profile = () => {
             <Image
             src={currentUser.photo}
             fill
-            alt={currentUser?._id.toString()}
+            alt={currentUser?.clerkId}
             className='rounded-full shadow-xl'
             />
         </div>
@@ -49,7 +49,7 @@ const Profile = () => {
                 <p className='text-sm md:text-md'>Subscribers: TODO </p>
                 <p className='text-sm md:text-md'>Videos: TODO</p>
             </div>
-            <p className='hidden md:flex px-1 max-w-[400px] text-sm md:text-md'>Bio: TODO m Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's stand</p>
+            <p className='hidden md:flex px-1 max-w-[400px] text-sm md:text-md'>Bio: TODO m Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industrys stand</p>
         </div>
       </div>
       <div className='2xl:w-[1200px] xl+1:w-[1100px] xl:w-[1000px] lg+1:w-[900px] lg:w-[970px] md+1:w-[800px]  md:w-[700px] w-[80%]  mx-auto'>

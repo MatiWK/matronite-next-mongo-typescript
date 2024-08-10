@@ -1,5 +1,4 @@
 'use client'
-import {  getUserByUserName } from '@/lib/actions/user.action'
 import { Search } from 'lucide-react'
 import { useRouter } from 'next/navigation'
 import React, { useState } from 'react'
