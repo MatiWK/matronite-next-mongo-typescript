@@ -2,6 +2,7 @@
 import { getCurrentUser } from '@/lib/actions/user.action'
 import { IUser } from '@/models/User'
 import { SignedIn, UserButton } from '@clerk/nextjs'
+import Link from 'next/link'
 import React, { useEffect, useState } from 'react'
 
 const SideNav = () => {
@@ -33,12 +34,12 @@ const SideNav = () => {
       <div className='p-5 flex flex-col  flex-1'>
         <h1 className='text-slate-300 text-xl font-bold pb-3'>GENERAL</h1>
         <ul className='text-white  font-semibold  flex-col flex-1 space-y-3 '>
-            <li>Subscriptions</li>
-            <li>Profile</li>
-            <li>History</li>
-            <li>Featured</li>
-            <li>Popular</li>
-            <li>Messages</li>
+            <li><Link href="/subscriptions">Subscriptions</Link></li>
+            <li><Link href={`/profile/${currentUser?.username}`}>Profile</Link></li>
+            <li><Link href="/history">History</Link></li>
+            <li><Link href="featured">Featured</Link></li>
+            <li><Link href="/popular">Popular</Link></li>
+            <li><Link href="/messages">Messages</Link></li>
         </ul>
         <div>
         chuj

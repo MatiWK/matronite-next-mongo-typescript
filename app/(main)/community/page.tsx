@@ -1,16 +1,15 @@
 'use client'
 import {  getUserByUserName } from '@/lib/actions/user.action'
 import { Search } from 'lucide-react'
-import React, { SyntheticEvent, useState } from 'react'
+import { useRouter } from 'next/navigation'
+import React, { useState } from 'react'
 
 const CommunityPage = () => {
     const [creator, setCreator] = useState<string>('')
+    const router = useRouter()
     
-    const search = async (e: SyntheticEvent) => {
-      e.preventDefault();
-      const foundUser = await getUserByUserName(creator)
-      console.log(foundUser)
-    }
+    
+    
 
     
 
@@ -20,7 +19,6 @@ const CommunityPage = () => {
     
     <div className=''>
         <h1 className='md:text-5xl text-3xl  my-16 font-bold text-center cursor-default'>Find Your Desired Creator</h1>
-        <form onSubmit={(e) => search(e)}>
 
         <div className='flex justify-center  items-center '>
             <input 
@@ -30,11 +28,10 @@ const CommunityPage = () => {
             type="text" 
             value={creator} 
             />
-            <button type='submit' className='py-2 px-4   rounded-r-xl bg-amber-100 text-black border-2 border-amber-100'>
+            <button type='button' onClick={() => router.push(`/community/${creator}`)} className='py-2 px-4   rounded-r-xl bg-amber-100 text-black border-2 border-amber-100'>
             <Search />
             </button >
         </div>
-        </form>
 
     </div>
   )
