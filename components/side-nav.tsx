@@ -17,7 +17,7 @@ const SideNav = () => {
     getUser()
   }, [])
   return (
-    <div className='min-h-screen w-[15%] bg-slate-700 shadow-xl  flex flex-col'>
+    <div className='min-h-screen w-[15%] bg-slate-700 shadow-xl hidden  lg+1:flex flex-col'>
         <div>
             <h1 className='text-slate-300 font-bold text-3xl p-5 pb-8 '>Matronite</h1>
         </div>
