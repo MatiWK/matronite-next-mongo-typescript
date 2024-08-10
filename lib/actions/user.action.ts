@@ -2,6 +2,7 @@
 
 import User, { IUser } from "@/models/User";
 import dbConnect from "../mongoose";
+import { currentUser } from "@clerk/nextjs/server";
 
 export async function createUser(user: IUser) {
     try {
@@ -14,11 +15,23 @@ export async function createUser(user: IUser) {
 }
 
 
-export async function getUserByMail(email: string) {
+export async function getUserByUserName(email: string) {
     try {
         await dbConnect()
-        const foundUsers = await User.find({email: {$regex : email}})
+        const foundUsers: IUser[] = await User.find({username: {$regex : email}})
         return JSON.parse(JSON.stringify(foundUsers))
+    } catch (error) {
+        console.log(error)
+    }
+}
+
+export async function getCurrentUser() {
+    try {
+        await dbConnect()
+        const clerkUser = await currentUser()
+        const user: IUser | null = await User.findOne({clerkId: clerkUser?.id})
+        return JSON.parse(JSON.stringify(user))
+
     } catch (error) {
         console.log(error)
     }

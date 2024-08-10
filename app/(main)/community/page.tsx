@@ -1,21 +1,25 @@
 'use client'
-import { getUserByMail } from '@/lib/actions/user.action'
+import {  getUserByUserName } from '@/lib/actions/user.action'
 import { Search } from 'lucide-react'
 import React, { SyntheticEvent, useState } from 'react'
 
 const CommunityPage = () => {
-    const [creator, setCreator] = useState('')
+    const [creator, setCreator] = useState<string>('')
     
     const search = async (e: SyntheticEvent) => {
       e.preventDefault();
-      const foundUser = await getUserByMail(creator)
+      const foundUser = await getUserByUserName(creator)
       console.log(foundUser)
     }
 
+    
+
+    
   return (
     
+    
     <div className=''>
-        <h1 className='md:text-5xl text-3xl  my-16 font-bold text-center'>Find Your Desired Creator</h1>
+        <h1 className='md:text-5xl text-3xl  my-16 font-bold text-center cursor-default'>Find Your Desired Creator</h1>
         <form onSubmit={(e) => search(e)}>
 
         <div className='flex justify-center  items-center '>
@@ -29,7 +33,6 @@ const CommunityPage = () => {
             <button type='submit' className='py-2 px-4   rounded-r-xl bg-amber-100 text-black border-2 border-amber-100'>
             <Search />
             </button >
-
         </div>
         </form>
 
