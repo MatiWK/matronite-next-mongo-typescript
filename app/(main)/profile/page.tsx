@@ -1,41 +1,36 @@
 'use client'
+import { Button } from '@/components/ui/button'
 import { getCurrentUser } from '@/lib/actions/user.action'
 import { IUser } from '@/models/User'
 import Image from 'next/image'
-import { useParams, useRouter } from 'next/navigation'
+import Link from 'next/link'
 import React, { useEffect, useState } from 'react'
-import toast from 'react-hot-toast'
 
 const Profile = () => {
     const [currentUser, setCurrentUser] = useState<IUser | null>()
-    const [isMounted, setIsMounted] = useState<boolean>(false)
-    const params = useParams()
-    const router = useRouter()
     
     useEffect(() => {
         const getUser = async () => {
             const data = await getCurrentUser()
-            if (params.username !== data.username) {
-                router.push('/community')
-                toast.error("You are NOT the owner of this profile!!!")
-            }
-            setIsMounted(true)
+            
             setCurrentUser(data)
         }
         getUser()
-    }, [params.username, router])
+    }, [])
     
-    if (!isMounted) return null
 
     if (!currentUser) return null
 
   return (
-    <div className='w-full h-full'>
+    <div className='w-full h-full'> 
       <div className='bg-black aspect-[5/1] 2xl:w-[1200px] xl+1:w-[1100px] xl:w-[1000px] lg+1:w-[900px] lg:w-[970px] md+1:w-[800px]  md:w-[700px] w-[80%] mx-auto mt-16 mb-8 rounded-2xl flex justify-center items-center'>
         <h1 className='md:text-5xl text-xl text-white font-bold '>YOUR BANNER</h1>
       </div>
+      <div>
+        
+      </div>
       <div className='items-center  2xl:w-[1200px] xl+1:w-[1100px] xl:w-[1000px] lg+1:w-[900px] lg:w-[970px] md+1:w-[800px]  md:w-[700px] w-[80%] mx-auto  rounded-2xl flex  gap-2'>
-        <div className=' md:h-[170px] sm:h-[100px] h-[70px] aspect-square relative'>
+        <div className='border-[6px] border-black rounded-full md:h-[170px] sm:h-[100px] h-[70px] aspect-square relative'>
             <Image
             src={currentUser.photo}
             fill
@@ -51,10 +46,22 @@ const Profile = () => {
             </div>
             <p className='hidden md:flex px-1 max-w-[400px] text-sm md:text-md'>Bio: TODO m Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industrys stand</p>
         </div>
+        <div className='flex mt-auto gap-2'>
+            <Link href="/upload">
+            <Button className='' size="lg">Upload a new Video</Button>
+            </Link>
+            <Link href="/profileSettings">
+            <Button className='' variant="secondary" size="lg">Settings</Button>
+            </Link>
+        </div>
       </div>
+        
+
       <div className='2xl:w-[1200px] xl+1:w-[1100px] xl:w-[1000px] lg+1:w-[900px] lg:w-[970px] md+1:w-[800px]  md:w-[700px] w-[80%]  mx-auto'>
       <div className='grid lg:grid-cols-3 md:grid-cols-2 gap-3 py-16  '>
-        <div className='bg-black rounded-xl  aspect-video'></div>
+        <div className='bg-black rounded-xl  aspect-video relative'>
+        
+        </div>
         <div className='bg-black rounded-xl  aspect-video'></div>
         <div className='bg-black rounded-xl  aspect-video'></div>
         <div className='bg-black rounded-xl  aspect-video'></div>
@@ -67,3 +74,11 @@ const Profile = () => {
 }
 
 export default Profile
+
+
+// <Image 
+//         alt="chuj"
+//         src="https://matronite-final-bucket-v4.s3.eu-north-1.amazonaws.com/453143938_1060161539075365_8998373175870311540_n.jpg1723398454332"
+//         fill
+//         className='object-cover object-center'
+//         />

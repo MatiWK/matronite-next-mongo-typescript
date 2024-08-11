@@ -17,7 +17,7 @@ const SideNav = () => {
     getUser()
   }, [])
   return (
-    <div className='min-h-screen w-[15%] bg-slate-700 shadow-xl hidden  lg+1:flex flex-col'>
+    <div className='min-h-screen w-[15%] bg-black shadow-xl hidden  lg+1:flex flex-col'>
         <div>
             <h1 className='text-slate-300 font-bold text-3xl p-5 pb-8 '>Matronite</h1>
         </div>
@@ -35,7 +35,7 @@ const SideNav = () => {
         <h1 className='text-slate-300 text-xl font-bold pb-3'>GENERAL</h1>
         <ul className='text-white  font-semibold  flex-col flex-1 space-y-3 '>
             <li><Link href="/subscriptions">Subscriptions</Link></li>
-            <li><Link href={`/profile/${currentUser?.username}`}>Profile</Link></li>
+            <li><Link href="/profile">Profile</Link></li>
             <li><Link href="/history">History</Link></li>
             <li><Link href="featured">Featured</Link></li>
             <li><Link href="/popular">Popular</Link></li>

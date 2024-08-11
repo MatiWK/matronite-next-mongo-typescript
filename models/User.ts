@@ -1,12 +1,15 @@
 import { Schema, model, Document, models, Types } from 'mongoose';
+import { IVideo } from './Video';
 
 export interface IUser{
-    clerkId: string;
-    email: string;
-    username: string | null;
-    firstName: string | null;
-    lastName: string | null;
-    photo: string
+  _id?: Types.ObjectId;
+  clerkId: string;
+  email: string;
+  username: string | null;
+  firstName: string | null;
+  lastName: string | null;
+  photo: string;
+  videos: Types.ObjectId[];
 }
 
 const userSchema = new Schema<IUser>({
@@ -16,6 +19,8 @@ const userSchema = new Schema<IUser>({
   firstName: { type: String },
   lastName: { type: String},
   photo: { type: String, required: true },
+  videos: [{ type: Types.ObjectId, ref: "Video", default: []}]
+  
 });
 
 const User = models.User || model<IUser>('User', userSchema);
