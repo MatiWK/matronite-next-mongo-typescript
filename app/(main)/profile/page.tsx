@@ -5,16 +5,27 @@ import { IUser } from '@/models/User'
 import Image from 'next/image'
 import Link from 'next/link'
 import React, { useEffect, useState } from 'react'
+import UserVideos from './(components)/user-videos'
+import { IVideo } from '@/models/Video'
+import { getVideosByUserId } from '@/lib/actions/video.actions'
 
 const Profile = () => {
     const [currentUser, setCurrentUser] = useState<IUser | null>()
+    const [videos, setVideos] = useState<IVideo[]>([])
     
     useEffect(() => {
         const getUser = async () => {
-            const data = await getCurrentUser()
-            
+            const data: IUser = await getCurrentUser()
             setCurrentUser(data)
+
+            const userVideos = await getVideosByUserId(data)
+            console.log(userVideos)
+            setVideos(userVideos)
         }
+
+        
+
+
         getUser()
     }, [])
     
@@ -42,7 +53,7 @@ const Profile = () => {
             <h1 className='font-bold text-xl md:text-3xl shadow-xl p-1'> {currentUser.username !== null && currentUser.username.length > 20 ? `${currentUser.username?.substring(0,20)}...` : currentUser.username}</h1>
             <div className='flex gap-2 px-1'>
                 <p className='text-sm md:text-md'>Subscribers: TODO </p>
-                <p className='text-sm md:text-md'>Videos: TODO</p>
+                <p className='text-sm md:text-md'>Videos: TODO </p>
             </div>
             <p className='hidden md:flex px-1 max-w-[400px] text-sm md:text-md'>Bio: TODO m Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industrys stand</p>
         </div>
@@ -57,18 +68,10 @@ const Profile = () => {
       </div>
         
 
-      <div className='2xl:w-[1200px] xl+1:w-[1100px] xl:w-[1000px] lg+1:w-[900px] lg:w-[970px] md+1:w-[800px]  md:w-[700px] w-[80%]  mx-auto'>
-      <div className='grid lg:grid-cols-3 md:grid-cols-2 gap-3 py-16  '>
-        <div className='bg-black rounded-xl  aspect-video relative'>
-        
-        </div>
-        <div className='bg-black rounded-xl  aspect-video'></div>
-        <div className='bg-black rounded-xl  aspect-video'></div>
-        <div className='bg-black rounded-xl  aspect-video'></div>
-        <div className='bg-black rounded-xl  aspect-video'></div>
-        <div className='bg-black rounded-xl  aspect-video'></div>
-      </div>
-      </div>
+      <UserVideos 
+      videos={videos}
+      />
+      
     </div>
   )
 }
@@ -76,9 +79,9 @@ const Profile = () => {
 export default Profile
 
 
-// <Image 
-//         alt="chuj"
-//         src="https://matronite-final-bucket-v4.s3.eu-north-1.amazonaws.com/453143938_1060161539075365_8998373175870311540_n.jpg1723398454332"
-//         fill
-//         className='object-cover object-center'
-//         />
+{/* <Image 
+        alt="chuj"
+        src="https://matronite-final-bucket-v4.s3.eu-north-1.amazonaws.com/453143938_1060161539075365_8998373175870311540_n.jpg1723398454332"
+        fill
+        className='object-cover object-center'
+        /> */}

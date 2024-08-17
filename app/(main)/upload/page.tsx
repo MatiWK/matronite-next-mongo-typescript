@@ -62,6 +62,7 @@ const UploadVideo = () => {
 
             console.log('Data posted successfully:', response.data);
             toast.success("Video has Been Uploaded!")
+            // TODO: PUSH BACK TO PROFILE
         } catch (error) {
             console.error('Error posting data:', error);
             toast.error("Error occured during video creation")

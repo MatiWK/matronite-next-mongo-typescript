@@ -24,6 +24,8 @@ export async function POST(
             thumbnailUrl: photo
         } = body;
 
+        
+
         if (!userId) {
             return new NextResponse("Unauthenticated", { status: 401 });
         }
@@ -38,7 +40,18 @@ export async function POST(
             return new NextResponse("Unauthenticated", { status: 401 });
         }
 
-        const newVideo = await Video.create(body)
+        if (!user._id) {
+            return new NextResponse("Unauthenticated", { status: 401 });
+        }
+
+        const videoWithRef: IVideo = {
+            title,
+            url: video,
+            thumbnailUrl: photo,
+            user: user._id
+        }
+
+        const newVideo = await Video.create(videoWithRef)
         
         await User.findOneAndUpdate(
             {_id: user._id},
