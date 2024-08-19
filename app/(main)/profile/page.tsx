@@ -8,6 +8,7 @@ import React, { useEffect, useState } from 'react'
 import UserVideos from './(components)/user-videos'
 import { IVideo } from '@/models/Video'
 import { getVideosByUserId } from '@/lib/actions/video.actions'
+import { PlayCircleIcon } from 'lucide-react'
 
 const Profile = () => {
     const [currentUser, setCurrentUser] = useState<IUser | null>()
@@ -46,25 +47,33 @@ const Profile = () => {
             src={currentUser.photo}
             fill
             alt={currentUser?.clerkId}
-            className='rounded-full shadow-xl'
+            className='rounded-full shadow-xl object-cover   object-center'
             />
         </div>
         <div className='text-white flex flex-col gap-2 py-2 '>
             <h1 className='font-bold text-xl md:text-3xl shadow-xl p-1'> {currentUser.username !== null && currentUser.username.length > 20 ? `${currentUser.username?.substring(0,20)}...` : currentUser.username}</h1>
             <div className='flex gap-2 px-1'>
                 <p className='text-sm md:text-md'>Subscribers: TODO </p>
-                <p className='text-sm md:text-md'>Videos: TODO </p>
+                <p className='text-sm md:text-md'>Videos: {currentUser.videos.length} </p>
             </div>
             <p className='hidden md:flex px-1 max-w-[400px] text-sm md:text-md'>Bio: TODO m Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industrys stand</p>
         </div>
-        <div className='flex mt-auto gap-2'>
+        <div className='hidden md+1:flex mt-auto gap-2 flex-col-reverse lg:flex-row '>
             <Link href="/upload">
             <Button className='' size="lg">Upload a new Video</Button>
             </Link>
-            <Link href="/profileSettings">
-            <Button className='' variant="secondary" size="lg">Settings</Button>
+            <Link href="/profile/settings">
+            <Button className='w-full' variant="secondary" size="lg">Settings</Button>
             </Link>
         </div>
+      </div>
+      <div className='md+1:hidden flex md+1:w-[800px]  md:w-[700px] w-[80%] mx-auto py-6 gap-2'>
+      <Link href="/upload">
+            <Button className='' size="lg">Upload a new Video</Button>
+            </Link>
+            <Link href="/profile/settings">
+            <Button className='w-full' variant="secondary" size="lg">Settings</Button>
+            </Link>
       </div>
         
 

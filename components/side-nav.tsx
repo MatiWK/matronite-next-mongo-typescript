@@ -16,17 +16,23 @@ const SideNav = () => {
     }
     getUser()
   }, [])
+
   return (
-    <div className='min-h-screen w-[15%] bg-black shadow-xl hidden  lg+1:flex flex-col'>
+    <div className='min-h-screen w-[15%] bg-black shadow-xl hidden  lg+1:flex flex-col fixed'>
+      <Link href="/community">
         <div>
             <h1 className='text-slate-300 font-bold text-3xl p-5 pb-8 '>Matronite</h1>
         </div>
+        </Link>
         <SignedIn >
           <div className=' w-full mx-auto flex items-center gap-2 p-5 pt-8 ' >
             
-            <UserButton />
+            <UserButton  />
             <div className='text-slate-300 text-sm font-semibold cursor-default hidden xl:flex'>
-              <h1>{currentUser?.username?.substring(0,15)}...</h1>
+              {currentUser?.username && (
+                <h1>{currentUser?.username?.length <= 15 ? currentUser?.username : currentUser?.username?.substring(0,15) + "..."}</h1>
+              )}
+              
             </div>
           </div>
       </SignedIn>
