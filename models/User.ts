@@ -9,7 +9,7 @@ export interface IUser{
   firstName: string | null;
   lastName: string | null;
   photo: string;
-  banner?: string;
+  banner: string | null;
   subscribers?: number;
   bio?: string;
   videos: Types.ObjectId[];
@@ -22,7 +22,7 @@ const userSchema = new Schema<IUser>({
   firstName: { type: String },
   lastName: { type: String},
   photo: { type: String, required: true },
-  banner: {type: String},
+  banner: {type: String || null, default: null},
   subscribers: {type: Number, default: 0},
   bio: { type: String, default: "" },
   videos: [{ type: Types.ObjectId, ref: "Video", default: []}]
