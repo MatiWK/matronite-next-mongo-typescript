@@ -9,7 +9,7 @@ export interface IUser{
   firstName: string | null;
   lastName: string | null;
   photo: string;
-  banner: string | null;
+  banner?: string | null;
   subscribers?: number;
   bio?: string;
   videos: Types.ObjectId[];
