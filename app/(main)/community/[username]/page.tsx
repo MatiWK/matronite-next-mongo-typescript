@@ -22,10 +22,10 @@ const FoundUsers = () => {
             const userName = params.username.toString().replace(/%20/g, "");
             const userData: IUser[] = await getUserByUserName(userName)
             setFoundUsers(userData)
-
             const userAndVideos = await getVideosById(userData)
 
             setUsersWithVideos(userAndVideos)
+            console.log(userData)
 
 
 
@@ -47,7 +47,7 @@ const FoundUsers = () => {
         
                 <div key={userAndVid.user.clerkId} className="bg-black p-4 flex gap-4 items-center justify-between   shadow-xl w-[800px] rounded-xl  hover:-translate-y-1  transition-transform ">
                 <Link href={`/channel/${userAndVid.user.username}`}>
-                <div className="flex items-center gap-2  bg-slate-700 p-4 rounded-xl shadow-xl min-w-[400px]">
+                <div className="flex items-center gap-2  bg-slate-700 p-4 rounded-xl shadow-xl min-w-[400px] border-2 border-transparent hover:border-white duration-500">
                     <Image
                     src={userAndVid.user.photo}
                     height={100}
@@ -67,8 +67,8 @@ const FoundUsers = () => {
                 
                 <div>
                 <h1 className="text-center font-bold text-white">Most Recent Video</h1>
-                <Link href={`/video/${userAndVid.video.title}`} >
-                <div className="bg-white h-[150px] aspect-video flex shadow-xl relative rounded-xl border-2 border-white">
+                <Link href={`/video/${userAndVid.video._id}`} >
+                <div className="bg-white h-[150px] aspect-video flex shadow-xl relative rounded-xl border-4 border-white hover:border-2 ">
                         <h1 className="text-black  text-center m-auto "></h1>
                         <Image 
                         src={userAndVid.video.thumbnailUrl}

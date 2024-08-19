@@ -1,7 +1,7 @@
 'use client'
 import { Button } from '@/components/ui/button'
-import { getCurrentUser } from '@/lib/actions/user.action'
-import { getVideosByTitle, updateViews } from '@/lib/actions/video.actions'
+import { getCurrentUser, getVideoByUserId } from '@/lib/actions/user.action'
+import { getVideoById, getVideosByTitle, updateViews } from '@/lib/actions/video.actions'
 import { IUser } from '@/models/User'
 import { IVideo } from '@/models/Video'
 import Image from 'next/image'
@@ -18,10 +18,10 @@ const VideoPage = () => {
 
       const fetchData = async () => {
         var replaced = params.title.toString().replace(/%20/g, " ");
-          const videoData: IVideo = await getVideosByTitle(replaced)
+          const videoData: IVideo = await getVideoById(params.title.toString())
           setVideo(videoData)
 
-          const userData: IUser = await getCurrentUser()
+          const userData: IUser = await getVideoByUserId(videoData)
           setCurrentUser(userData)
       }
 

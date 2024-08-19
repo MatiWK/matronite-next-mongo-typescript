@@ -25,6 +25,16 @@ export async function getVideosByTitle(title: string) {
     }
 }
 
+export async function getVideoById(id: string) {
+    try {
+        await dbConnect()
+        const video: IVideo | null = await Video.findOne({_id: id})
+        return JSON.parse(JSON.stringify(video))
+    } catch (error) {
+        console.log(error)
+    }
+}
+
 export async function updateViews(video: IVideo) {
     try {
         await dbConnect()

@@ -3,6 +3,7 @@
 import User, { IUser } from "@/models/User";
 import dbConnect from "../mongoose";
 import { currentUser } from "@clerk/nextjs/server";
+import { IVideo } from "@/models/Video";
 
 export async function createUser(user: IUser) {
     try {
@@ -28,6 +29,16 @@ export async function getUserByUserName(searchQuery: string) {
     }
 }
 
+export async function getUserByUserNameFromParams(username: string) {
+    try {
+        await dbConnect()
+        const user: IUser | null = await User.findOne({username}) 
+        return JSON.parse(JSON.stringify(user))
+    } catch (error) {
+        console.log(error)
+    }
+}
+
 export async function getCurrentUser() {
     try {
         await dbConnect()
@@ -45,6 +56,16 @@ export async function updateUser(user: IUser) {
         await dbConnect()
         const updatedUser: IUser | null = await User.findByIdAndUpdate({_id: user._id}, {username: user.username, photo: user.photo})
         return JSON.parse(JSON.stringify(updatedUser))
+    } catch (error) {
+        console.log(error)
+    }
+}
+
+export async function getVideoByUserId(video: IVideo) {
+    try {
+        await dbConnect()
+        const videoOfUser: IUser | null = await User.findOne({_id: video.user})
+        return JSON.parse(JSON.stringify(videoOfUser))
     } catch (error) {
         console.log(error)
     }

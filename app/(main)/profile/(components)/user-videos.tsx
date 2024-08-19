@@ -15,17 +15,17 @@ const UserVideos = ({
   return (
     <div className='2xl:w-[1200px] xl+1:w-[1100px] xl:w-[1000px] lg+1:w-[900px] lg:w-[970px] md+1:w-[800px]  md:w-[700px] w-[80%]  mx-auto'>
       <div className='grid lg:grid-cols-3 md:grid-cols-2 gap-3 py-16  '>
-      {videos.map((video) => (
+      {videos.map((video: IVideo) => (
     <Link 
-        href={"/video/" + video.title}
+        href={"/video/" + video._id}
         key={video._id?.toString()}
     >
-        <div className='group bg-black rounded-xl aspect-video relative'>
+        <div className='group bg-black rounded-xl aspect-video relative hover:scale-110 transition-all'>
             <Image 
                 alt="thumbnail"
                 src={video.thumbnailUrl}
                 fill
-                className='object-cover p-2 object-center rounded-xl opacity-70 group-hover:opacity-100 group-hover:-translate-y-1 transition-all'
+                className='object-cover p-2 object-center rounded-xl opacity-70 group-hover:opacity-100  transition-all'
             />
             <PlayCircleIcon 
                 className='z-50 absolute top-1/2 -translate-y-[50%] left-1/2 -translate-x-[50%] group-hover:scale-110 duration-500' 
