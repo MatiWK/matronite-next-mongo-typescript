@@ -59,7 +59,7 @@ const VideoPage = () => {
         </div>
         <div className='flex flex-col gap-0'>
           <h1 className='text-white font-semibold'>{currentUser.username}</h1>
-          <h1 className='text-white text-sm '>Subscribers TODO</h1>
+          <h1 className='text-white text-sm '>Subscribers {currentUser.subscribers}</h1>
 
         </div>
         
