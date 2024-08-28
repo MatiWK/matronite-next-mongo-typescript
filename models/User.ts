@@ -25,7 +25,7 @@ const userSchema = new Schema<IUser>({
   photo: { type: String, required: true },
   banner: {type: String || null, default: null},
   subscribers: {type: Number, default: 0},
-  subscribtions: {type: Types.ObjectId, ref: "User", default: []},
+  subscribtions: [{type: Types.ObjectId, ref: "User", default: []}],
   bio: { type: String, default: "" },
   videos: [{ type: Types.ObjectId, ref: "Video", default: []}]
   
