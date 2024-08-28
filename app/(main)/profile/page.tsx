@@ -53,7 +53,7 @@ const Profile = () => {
         <div className='text-white flex flex-col gap-2 py-2 '>
             <h1 className='font-bold text-xl md:text-3xl shadow-xl p-1'> {currentUser.username !== null && currentUser.username.length > 20 ? `${currentUser.username?.substring(0,20)}...` : currentUser.username}</h1>
             <div className='flex gap-2 px-1'>
-                <p className='text-sm md:text-md'>Subscribers: {currentUser.subscribers} </p>
+                <p className='text-sm md:text-md'>Subscribers: {currentUser.subscribers?.length || 0} </p>
                 <p className='text-sm md:text-md'>Videos: {currentUser.videos.length} </p>
             </div>
             <p className='hidden md:flex px-1 max-w-[400px] text-sm md:text-md'>Bio: {currentUser.bio}</p>

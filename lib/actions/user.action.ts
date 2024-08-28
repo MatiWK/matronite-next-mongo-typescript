@@ -70,3 +70,46 @@ export async function getVideoByUserId(video: IVideo) {
         console.log(error)
     }
 }
+
+export async function subscribe(currentUser: IUser, user: IUser) {
+    try {
+        await dbConnect()
+        const currentUserUpdated: IUser | null = await User.findOneAndUpdate({_id: currentUser?._id}, { $push: {subscribtions: user._id} })
+        return JSON.parse(JSON.stringify(currentUserUpdated))
+
+    } catch (error) {
+        console.log(error)
+    }
+}
+
+export async function unSubscribe(currentUser: IUser, user: IUser) {
+    try {
+        await dbConnect()
+        const currentUserUpdated: IUser | null = await User.findOneAndUpdate({_id: currentUser?._id},  { $pull : {subscribtions: user._id} }, { new: true})
+        return JSON.parse(JSON.stringify(currentUserUpdated))
+
+    } catch (error) {
+        console.log(error)
+    }
+}
+
+// await User.findOneAndUpdate(
+//     {_id: user._id},
+//     { $push: {videos: newVideo._id}}
+// )
+
+
+export async function isSubscribed(currentUser: IUser, user: IUser) {
+    try {
+        await dbConnect()
+        if (user._id === undefined) return
+        const isSubscribedToUser: IUser | null = await User.findOne({_id: currentUser._id})
+        const userSet = new Set(isSubscribedToUser?.subscribtions)
+        const isSubbed = userSet.has(user._id)
+        return JSON.parse(JSON.stringify(userSet))
+
+    } catch (error) {
+        console.log(error)
+    }
+    
+}

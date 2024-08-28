@@ -10,7 +10,7 @@ export interface IUser{
   lastName: string | null;
   photo: string;
   banner?: string | null;
-  subscribers?: number; // people who are subscriber to this users account
+  subscribers?: Types.ObjectId[]; // people who are subscriber to this users account
   subscribtions?: Types.ObjectId[]; // all users this user is subscribed to
   bio?: string;
   videos: Types.ObjectId[];
@@ -24,7 +24,7 @@ const userSchema = new Schema<IUser>({
   lastName: { type: String},
   photo: { type: String, required: true },
   banner: {type: String || null, default: null},
-  subscribers: {type: Number, default: 0},
+  subscribers: [{type: Types.ObjectId, ref: "User", default: []}],
   subscribtions: [{type: Types.ObjectId, ref: "User", default: []}],
   bio: { type: String, default: "" },
   videos: [{ type: Types.ObjectId, ref: "Video", default: []}]
