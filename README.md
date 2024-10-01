@@ -1,4 +1,4 @@
-### Hi, this is my little side project. It's an app similar to patronite. Basically a platform where creators upload videos only available for other users behind a paywall.
+### Hi, this is my little side project. It's an app similar to patronite. Basically a platform where creators upload videos, which are only available for other users behind a paywall.
 
 
 
