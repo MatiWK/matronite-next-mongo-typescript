@@ -9,10 +9,10 @@ export interface IUser{
   firstName: string | null;
   lastName: string | null;
   photo: string;
-  banner?: string | null;
-  subscribers?: Types.ObjectId[]; // people who are subscriber to this users account
+  banner: string | null;
+  subscribers?: Types.ObjectId[]; // people who are subscribed to this users account
   subscribtions?: Types.ObjectId[]; // all users this user is subscribed to
-  bio?: string;
+  bio: string;
   videos: Types.ObjectId[];
 }
 

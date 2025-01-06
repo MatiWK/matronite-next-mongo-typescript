@@ -4,10 +4,11 @@ import { getVideosByUserId } from '@/lib/actions/video.actions'
 import { IUser } from '@/models/User'
 import { IVideo } from '@/models/Video'
 import Image from 'next/image'
-import { useParams } from 'next/navigation'
+import { useParams, useRouter } from 'next/navigation'
 import React, { useEffect, useState } from 'react'
 import UserVideos from '../../profile/(components)/user-videos'
 import { Button } from '@/components/ui/button'
+import Link from 'next/link'
 
 const ChannelPage = () => {
     const [user, setUser] = useState<IUser | null>(null)
@@ -15,9 +16,10 @@ const ChannelPage = () => {
     const [currentUser, setCurrentUser] = useState<IUser | null>(null)
     const [loading, setLoading] = useState<boolean>(false)
     const [subscribed, setSubscribed] = useState<boolean | undefined>(false)
-
+    const [ownChannel, setOwnChannel] = useState<boolean>(false)
     
 
+    
     const params = useParams()
     
     useEffect(() => {
@@ -35,6 +37,13 @@ const ChannelPage = () => {
             // GETS LOGGED USER
             const loggedUserData = await getCurrentUser()
             setCurrentUser(loggedUserData)
+
+            // CHECK IF CHANNEL BELONGES TO LOGGED USER
+
+            if (loggedUserData._id.toString() === userData._id.toString()) {
+              setOwnChannel(true)
+              
+            }
 
             // CHECK if logged user is subscribed
             const subs = async (curUser: IUser, us: IUser) => {
@@ -79,14 +88,23 @@ const ChannelPage = () => {
 
   return (
     <div className='w-full h-full'> 
-      <div className='bg-black aspect-[5/1] 2xl:w-[1050px] xl+1:w-[900px]  md+1:w-[750px]  md:w-[700px] w-[80%] mx-auto mt-16 mb-8 rounded-2xl flex justify-center items-center'>
-        <h1 className='md:text-5xl text-xl text-white font-bold '>{user.banner === null ? "Your Banner" : user.banner}</h1>
-      </div>
+       <div className='relative bg-black md+1:aspect-[5/1] aspect-[4/1] 2xl:w-[1050px] xl+1:w-[900px]  md+1:w-[750px]   mx-auto md+1:mt-16 mb-8 rounded-2xl flex justify-center items-center'>
+            
+            {user.banner === null ? <h1 className='md:text-5xl text-xl text-white font-bold '> banner</h1> : 
+            <Image 
+            src={user.banner}
+            fill
+            alt="Profile Banner"
+            className='absolute object-cover object-center rounded-2xl '
+            />
+            }
+              
+            </div>
       <div>
         
       </div>
-      <div className='items-center justify-between 2xl:w-[1050px] xl+1:w-[900px]  md+1:w-[750px]  md:w-[700px] w-[80%] mx-auto  rounded-2xl flex  gap-2'>
-       <div className='flex gap-2 items-center'>
+      <div className=' justify-between 2xl:w-[1050px] xl+1:w-[900px]  md+1:w-[750px]  md:w-[700px] w-[80%] mx-auto  rounded-2xl md+1:flex  gap-2'>
+       <div className='flex gap-2 items-center py-6'>
        <div className='border-[6px] border-black rounded-full md:h-[170px] sm:h-[100px] h-[70px] aspect-square relative'>
             <Image
             src={user.photo}
@@ -104,13 +122,14 @@ const ChannelPage = () => {
             <p className='hidden md:flex px-1 max-w-[400px] text-sm md:text-md'>Bio: {user.bio}</p>
         </div>
        </div>
-        { subscribed ? (
-          <Button onClick={onUnSubscribe}  disabled={loading} size="xl" variant="default">Subscribed</Button>
+       {ownChannel ? <Link   href="/profile"><Button >Go to my channel</Button></Link> :
+        subscribed ? (
+        <Button onClick={onUnSubscribe}  disabled={loading} size="xl" variant="default">Subscribed</Button>
 
-        ): (
-          <Button onClick={onSubscribe} disabled={loading} size="xl" variant="secondary">Subscribe</Button>
-        ) 
-        }
+      ): (
+        <Button onClick={onSubscribe} disabled={loading} size="xl" variant="secondary">Subscribe</Button>
+      ) 
+      }
       </div>
 
       <UserVideos 

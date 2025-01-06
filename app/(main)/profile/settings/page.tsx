@@ -15,6 +15,8 @@ const SettingsPage = () => {
     const [currentUser, setCurrentUser] = useState<IUser | null>(null)
     const [editing, setEditing] = useState<boolean>(false)
     const [loading, setLoading] = useState<boolean>(false)
+    const [bio, setBio] = useState<string>('')
+    const [banner, setBanner] = useState<string | null>('')
 
 
     const router = useRouter()
@@ -26,6 +28,8 @@ const SettingsPage = () => {
             setCurrentUser(userData)
             setUsername(userData.username)
             setProfilePic(userData.photo)
+            setBio(userData.bio)
+            setBanner(userData.banner)
             
         }
 
@@ -40,28 +44,42 @@ const SettingsPage = () => {
     if (!currentUser) return
 
     const save = async () => {
-        const updating = {...currentUser, photo: profilePic, username}
+        const updating = {...currentUser, photo: profilePic, username, bio, banner}
         const updatedUser: IUser = await updateUser(updating)
         toast.success("Profile Updated Succesfully!")
         location.reload();
     }
 
-    const uploadImageToAWSS3 = async (e: React.ChangeEvent<HTMLInputElement>) => {
+    const uploadImageToAWSS3 = async (e: React.ChangeEvent<HTMLInputElement>, type: "profilePIC" | "banner") => {
         setLoading(true)
         if (e.target.files === null) return;
-        
+        console.log(type)
         const file = e.target.files[0];
         
         const arrayBuffer = await file.arrayBuffer();
         const base64String = Buffer.from(arrayBuffer).toString('base64');  
     
         const response = await uploadFile(base64String, file.name);  
-        setProfilePic(`https://matronite-final-bucket-v4.s3.eu-north-1.amazonaws.com/${response.fileName}${response.dateFileId}`)
+
+        if (type === "profilePIC" ) {
+            setProfilePic(`https://matronite-final-bucket-v4.s3.eu-north-1.amazonaws.com/${response.fileName}${response.dateFileId}`)
+        
+        } else {
+            setBanner(`https://matronite-final-bucket-v4.s3.eu-north-1.amazonaws.com/${response.fileName}${response.dateFileId}`)
+        }
 
         if (response) {
-            toast.success("Thumbnail has been uploaded successfully")
+            if (type === "profilePIC") {
+                toast.success("Profile Pic has been uploaded successfully")
+            } else {
+                toast.success("Banner has been uploaded successfully")
+            }
         } else {
-            toast.error("Thumbnail upload has failed")
+            if (type === "profilePIC") {
+                toast.error("Profile Pic upload has failed")
+            } else {
+                toast.error("Banner upload has failed")
+            }
         }
 
         setLoading(false)
@@ -69,16 +87,16 @@ const SettingsPage = () => {
 
 
   return (
-    <div className=' text-black  m-16 p-16 rounded-lg w-1/2'>
+    <div className=' text-black  my-16  rounded-lg '>
 
-        <div className='flex flex-col gap-5 bg-white rounded-xl p-8 text-xl'>
+        <div className='flex flex-col gap-5 bg-white rounded-xl p-8  lg:text-xl'>
         <div className='flex gap-5 font-semibold items-center'>
             <label className='  w-1/4 font-bold' >Username:</label>
-            {!editing ? <h1 className='  font-bold'>{currentUser.username}</h1> : (
+            {!editing ? <h1 className=' overflow-hidden  font-bold'>{currentUser.username}</h1> : (
                 <input type="text"
                 disabled={loading}
                 value={username || ''}
-                className='rounded-md py-1 px-1 focus:outline-none border-2 focus:bg-slate-500 focus:border-slate-600 border-transparent bg-slate-300 text-white transition-all'
+                className='rounded-md py-1 px-1 focus:outline-none border-2 w-3/5 focus:bg-slate-500 focus:border-slate-600 border-transparent bg-slate-300 text-white transition-all'
                 onChange={(e) => setUsername(() => e.target.value)}
                 />
             )}
@@ -105,19 +123,52 @@ const SettingsPage = () => {
                     </div>
                     <input 
                     disabled={loading}
-                    onChange={(e) => uploadImageToAWSS3(e)}
+                    onChange={(e) => uploadImageToAWSS3(e, 'profilePIC')}
                     accept="image/png, image/jpeg" type="file" className='hidden'/>
                 </label>)
             )}
         </div>
         <div className='flex gap-5 font-semibold items-center'>
+            <label className='w-1/4 font-bold'>Banner:</label>
+            {currentUser._id && (
+            
+                !editing ? 
+                (
+                    currentUser.banner !== null ? (
+                    <div className='relative h-[120px] w-[120px] rounded-full border-[4px] border-black'>
+                    <Image 
+                src={currentUser.banner}
+                fill
+                alt={currentUser._id.toString()}
+                className='rounded-full object-cover  object-center'
+                />
+                </div>) : (
+                    <h1>kutas</h1>
+                )
+                ) : (
+                    <label className='bg-slate-300 hover:bg-slate-500 text-black  w-[200px] shadow-xl cursor-pointer 
+                    hover:-translate-y-1 transition-all duration-500 aspect-square rounded-xl'>
+                        <div className='flex justify-center items-center h-full
+                        font-bold text-xl '>
+                            Upload
+                        </div>
+                        <input 
+                        disabled={loading}
+                        onChange={(e) => uploadImageToAWSS3(e, 'banner')}
+                        accept="image/png, image/jpeg" type="file" className='hidden'/>
+                    </label>
+
+                ))
+            }
+        </div>
+        <div className='flex gap-5 font-semibold items-center'>
             <label className='  w-1/4 font-bold' >Email:</label>
-            <h1 className='  font-bold'>{currentUser.email}</h1>
+            <h1 className=' overflow-hidden font-bold'>{currentUser.email}</h1>
             
         </div>
         <div className='flex gap-5 font-semibold items-center'>
             <label className='  w-1/4 font-bold' >Subscribers:</label>
-            <h1 className='  font-bold'>TODO</h1>
+            <h1 className='  font-bold'>{currentUser.subscribers?.length || 0}</h1>
             
         </div>
         <div className='flex gap-5 font-semibold items-center'>
@@ -133,7 +184,20 @@ const SettingsPage = () => {
         <div className='flex gap-5 font-semibold items-center w-full h-full'>
             <label className='  w-1/4 font-bold' >BIO:</label>
             <div className='h-full '>
-                <h1 className='text-lg  font-semibold flex flex-wrap'>TODO</h1>
+                { !editing ? (
+                    <h1 className='text-lg  font-semibold flex flex-wrap'>{currentUser.bio}</h1>
+                ): (
+                    
+                    <textarea
+                      value={bio || ''}
+                        className='rounded-md  py-1 px-1 focus:outline-none border-2 focus:bg-slate-500 focus:border-slate-600 border-transparent bg-slate-300 text-white transition-all'
+                        rows={10}
+                        cols={40}
+                        onChange={(e) => setBio(() => e.target.value)}
+
+                    >
+                        Enter bio here...</textarea>
+                )}
             </div>
             
         </div>

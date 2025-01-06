@@ -54,7 +54,7 @@ export async function getCurrentUser() {
 export async function updateUser(user: IUser) {
     try {
         await dbConnect()
-        const updatedUser: IUser | null = await User.findByIdAndUpdate({_id: user._id}, {username: user.username, photo: user.photo})
+        const updatedUser: IUser | null = await User.findByIdAndUpdate({_id: user._id}, {username: user.username, photo: user.photo, bio: user.bio, banner: user.banner})
         return JSON.parse(JSON.stringify(updatedUser))
     } catch (error) {
         console.log(error)
@@ -75,6 +75,7 @@ export async function subscribe(currentUser: IUser, user: IUser) {
     try {
         await dbConnect()
         const currentUserUpdated: IUser | null = await User.findOneAndUpdate({_id: currentUser?._id}, { $push: {subscribtions: user._id} })
+        const userUpdate: IUser | null = await User.findOneAndUpdate({_id: user._id}, { $push: {subscribers: currentUser._id}})
         return JSON.parse(JSON.stringify(currentUserUpdated))
 
     } catch (error) {
@@ -86,7 +87,8 @@ export async function unSubscribe(currentUser: IUser, user: IUser) {
     try {
         await dbConnect()
         const currentUserUpdated: IUser | null = await User.findOneAndUpdate({_id: currentUser?._id},  { $pull : {subscribtions: user._id} }, { new: true})
-        return JSON.parse(JSON.stringify(currentUserUpdated))
+        const userUpdated: IUser | null = await User.findOneAndUpdate({_id: user._id}, { $pull: {subscribers: currentUser._id} }, {new: true})
+        return JSON.parse(JSON.stringify({currentUserUpdated, userUpdated}))
 
     } catch (error) {
         console.log(error)

@@ -32,11 +32,19 @@ const Profile = () => {
     
 
     if (!currentUser) return null
-
   return (
     <div className='w-full h-full'> 
-      <div className='bg-black aspect-[5/1] 2xl:w-[1050px] xl+1:w-[900px]  md+1:w-[750px]  md:w-[700px] w-[80%] mx-auto mt-16 mb-8 rounded-2xl flex justify-center items-center'>
-        <h1 className='md:text-5xl text-xl text-white font-bold '>{currentUser.banner === null ? "Your Banner" : currentUser.banner}</h1>
+      <div className='relative bg-black md+1:aspect-[5/1] aspect-[4/1] 2xl:w-[1050px] xl+1:w-[900px]  md+1:w-[750px]   mx-auto md+1:mt-16 mb-8 rounded-2xl flex justify-center items-center'>
+      
+      {currentUser.banner === null ? <h1 className='md:text-5xl text-xl text-white font-bold '>Your banner</h1> : 
+      <Image 
+      src={currentUser.banner}
+      fill
+      alt="Profile Banner"
+      className='absolute object-cover object-center rounded-2xl '
+      />
+      }
+        
       </div>
       <div>
         

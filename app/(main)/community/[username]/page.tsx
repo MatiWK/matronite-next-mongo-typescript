@@ -13,7 +13,6 @@ import React, { useEffect, useState } from 'react'
 
 const FoundUsers = () => {
     const [foundUsers, setFoundUsers] = useState<IUser[] | null>(null)
-    const [usersWithVideos , setUsersWithVideos] = useState<any[]>()
     const params = useParams()
 
     useEffect(() => {
@@ -22,13 +21,6 @@ const FoundUsers = () => {
             const userName = params.username.toString().replace(/%20/g, "");
             const userData: IUser[] = await getUserByUserName(userName)
             setFoundUsers(userData)
-            const userAndVideos = await getVideosById(userData)
-
-            setUsersWithVideos(userAndVideos)
-            console.log(userData)
-
-
-
 
             
             
@@ -42,48 +34,29 @@ const FoundUsers = () => {
 
     
   return (
-    <div className="p-16 flex flex-col gap-4">
-        {usersWithVideos?.map((userAndVid) => 
+    <div className="py-16 flex flex-col lg:gap-4 gap-2">
+        {foundUsers?.map((user) => 
         
-                <div key={userAndVid.user.clerkId} className="bg-black p-4 flex gap-4 items-center justify-between   shadow-xl w-[800px] rounded-xl  hover:-translate-y-1  transition-transform ">
-                <Link href={`/channel/${userAndVid.user.username}`}>
+                <div key={user.clerkId} className="bg-black p-4   shadow-xl lg:w-[800px] rounded-xl  hover:-translate-y-1  transition-transform ">
+                <Link href={`/channel/${user.username}`}>
                 <div className="flex items-center gap-2  bg-slate-700 p-4 rounded-xl shadow-xl min-w-[400px] border-2 border-transparent hover:border-white duration-500">
                     <Image
-                    src={userAndVid.user.photo}
+                    src={user.photo}
                     height={100}
                     width={100}
-                    alt={userAndVid.user.clerkId}
+                    alt={user.username || "User Photo"}
                     className="rounded-full shadow-xl object-cover object-center aspect-square"
                     />
                     <div className="text-white  font-semibold text-xl ">
-                    <div className="flex flex-col ">
-                    <h1>Subscribers: TODO</h1>
+                        <div className="flex flex-col ">
+                        <h1>Subscribers: {user.subscribers?.length}</h1>
 
-                    {userAndVid.user.username !== null && <h1>{userAndVid.user.username.length > 20 ? `${userAndVid.user.username?.substring(0,20)}...` : userAndVid.user.username}</h1>}
+                        {user.username !== null && <h1>{user.username.length > 20 ? `${user.username?.substring(0,20)}...` : user.username}</h1>}
+                        </div>
                     </div>
-                </div>
                 </div>
                 </Link>
                 
-                <div>
-                <h1 className="text-center font-bold text-white">Most Recent Video</h1>
-                <Link href={`/video/${userAndVid.video._id}`} >
-                <div className="bg-white h-[150px] aspect-video flex shadow-xl relative rounded-xl border-4 border-white hover:border-2 ">
-                        <h1 className="text-black  text-center m-auto "></h1>
-                        <Image 
-                        src={userAndVid.video.thumbnailUrl}
-                        fill
-                        alt={userAndVid.video._id}
-                        className='rounded-xl'
-                        />
-                        <PlayCircleIcon 
-                        className='text-white absolute top-1/2 left-1/2 -translate-y-[50%] -translate-x-[50%]'
-                        size={40}
-                        />
-                        
-                    </div>
-                    </Link>
-                </div>
             </div>
         )}
     </div>

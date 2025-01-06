@@ -48,7 +48,6 @@ const SideNav = () => {
             <li><Link href="/messages">Messages</Link></li>
         </ul>
         <div>
-        chuj
       </div>
       </div>
       

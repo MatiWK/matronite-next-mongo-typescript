@@ -17,9 +17,8 @@ const CommunityPage = () => {
     
     
     <div className=''>
-        <h1 className='md:text-5xl text-3xl  my-16 font-bold text-center cursor-default'>Find Your Desired Creator</h1>
 
-        <div className='flex justify-center  items-center '>
+        <div className='flex justify-center my-8 items-center '>
             <input 
             placeholder='Enter E-mail or Username'
             onChange={(e) => setCreator(e.target.value)}
@@ -31,6 +30,10 @@ const CommunityPage = () => {
             <Search />
             </button >
         </div>
+        
+        <h1 className='md:text-5xl text-3xl  my-16 font-bold text-center cursor-default'>Check whats popular today!</h1>
+
+        
 
     </div>
   )
