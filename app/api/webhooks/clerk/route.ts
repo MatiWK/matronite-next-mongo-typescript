@@ -73,7 +73,8 @@ export async function POST(req: Request) {
             lastName: last_name,
             photo: image_url,
             videos: [],
-            banner: null
+            banner: null,
+            bio: ""
         }
 
         console.log(user);
