@@ -4,6 +4,7 @@ import User, { IUser } from "@/models/User";
 import dbConnect from "../mongoose";
 import { currentUser } from "@clerk/nextjs/server";
 import { IVideo } from "@/models/Video";
+import { Types } from "mongoose";
 
 export async function createUser(user: IUser) {
     try {
@@ -39,6 +40,29 @@ export async function getUserByUserNameFromParams(username: string) {
     }
 }
 
+export async function getUsersById(subscriptions: Types.ObjectId[] | undefined) {
+    
+    if (!subscriptions || subscriptions.length === 0) return []
+    console.log(subscriptions)
+    try {
+        await dbConnect()
+
+        const users: IUser[] = await User.find({
+            _id: {
+                $in: subscriptions
+            }
+        })
+        
+        return JSON.parse(JSON.stringify(users))
+
+    } catch (error) {
+        console.log(error)
+    }
+    
+}
+
+
+
 export async function getCurrentUser() {
     try {
         await dbConnect()
@@ -70,6 +94,7 @@ export async function getVideoByUserId(video: IVideo) {
         console.log(error)
     }
 }
+
 
 export async function subscribe(currentUser: IUser, user: IUser) {
     try {

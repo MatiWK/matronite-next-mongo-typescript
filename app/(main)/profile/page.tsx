@@ -34,14 +34,14 @@ const Profile = () => {
     if (!currentUser) return null
   return (
     <div className='w-full h-full'> 
-      <div className='relative bg-black md+1:aspect-[5/1] aspect-[4/1] 2xl:w-[1050px] xl+1:w-[900px]  md+1:w-[750px]   mx-auto md+1:mt-16 mb-8 rounded-2xl flex justify-center items-center'>
+      <div className='relative bg-black md+1:aspect-[5/1] aspect-[4/1] 2xl:w-[1050px] xl+1:w-[900px]  md+1:w-[750px]    mx-auto md+1:mt-16 mb-8 rounded-2xl flex justify-center items-center'>
       
       {currentUser.banner === null ? <h1 className='md:text-5xl text-xl text-white font-bold '>Your banner</h1> : 
       <Image 
       src={currentUser.banner}
       fill
       alt="Profile Banner"
-      className='absolute object-cover object-center rounded-2xl '
+      className='absolute object-cover object-center rounded-2xl shadow-2xl'
       />
       }
         
@@ -64,7 +64,7 @@ const Profile = () => {
                 <p className='text-sm md:text-md'>Subscribers: {currentUser.subscribers?.length || 0} </p>
                 <p className='text-sm md:text-md'>Videos: {currentUser.videos.length} </p>
             </div>
-            <p className='hidden md:flex px-1 max-w-[400px] text-sm md:text-md'>Bio: {currentUser.bio}</p>
+            <p className='hidden md:flex px-1 max-w-[400px] text-sm md:text-md'>Bio: {currentUser.bio.length > 120 ? `${currentUser.bio.substring(0,120)}...` : currentUser.bio}</p>
         </div>
         <div className='hidden md+1:flex mt-auto gap-2 flex-col-reverse lg:flex-row '>
             <Link href="/upload">

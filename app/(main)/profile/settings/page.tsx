@@ -87,10 +87,10 @@ const SettingsPage = () => {
 
 
   return (
-    <div className=' text-black  my-16  rounded-lg '>
+    <div className=' text-black  my-16  rounded-lg lg:w-1/2  w-full p-5'>
 
-        <div className='flex flex-col gap-5 bg-white rounded-xl p-8  lg:text-xl'>
-        <div className='flex gap-5 font-semibold items-center'>
+        <div className='flex flex-col gap-5 bg-white rounded-xl p-8 w-full  lg:text-xl'>
+        <div className='flex gap-8 font-semibold items-center'>
             <label className='  w-1/4 font-bold' >Username:</label>
             {!editing ? <h1 className=' overflow-hidden  font-bold'>{currentUser.username}</h1> : (
                 <input type="text"
@@ -102,11 +102,11 @@ const SettingsPage = () => {
             )}
             
         </div>
-        <div className='flex gap-5 font-semibold items-center '>
+        <div className='flex gap-8 font-semibold items-center '>
             <label className='  w-1/4 font-bold' >Profile Pic:</label>
             {currentUser._id && (
                 !editing ? 
-                (<div className='relative h-[120px] w-[120px] rounded-full border-[4px] border-black'>
+                (<div className='relative h-[120px] w-[120px] rounded-full border-[4px] bg-black border-black'>
                     <Image 
                 src={currentUser.photo}
                 fill
@@ -128,22 +128,24 @@ const SettingsPage = () => {
                 </label>)
             )}
         </div>
-        <div className='flex gap-5 font-semibold items-center'>
+        <div className='flex gap-8 font-semibold items-center'>
             <label className='w-1/4 font-bold'>Banner:</label>
             {currentUser._id && (
             
                 !editing ? 
                 (
                     currentUser.banner !== null ? (
-                    <div className='relative h-[120px] w-[120px] rounded-full border-[4px] border-black'>
+                    <div className='relative w-full aspect-[5/1] border-[4px] bg-black border-black rounded-xl '>
                     <Image 
                 src={currentUser.banner}
                 fill
                 alt={currentUser._id.toString()}
-                className='rounded-full object-cover  object-center'
+                className='rounded-xl object-cover w-full h-full  object-center '
                 />
                 </div>) : (
-                    <h1>kutas</h1>
+                    <div className='relative w-full aspect-[5/1] rounded-xl border-[4px] bg-black border-black'>
+                        <h1 className='flex items-center justify-center w-full h-full text-white'>Your Banner</h1>
+                    </div>
                 )
                 ) : (
                     <label className='bg-slate-300 hover:bg-slate-500 text-black  w-[200px] shadow-xl cursor-pointer 
@@ -161,27 +163,27 @@ const SettingsPage = () => {
                 ))
             }
         </div>
-        <div className='flex gap-5 font-semibold items-center'>
+        <div className='flex gap-[2rem] font-semibold items-center'>
             <label className='  w-1/4 font-bold' >Email:</label>
             <h1 className=' overflow-hidden font-bold'>{currentUser.email}</h1>
             
         </div>
-        <div className='flex gap-5 font-semibold items-center'>
+        <div className='flex gap-[2rem] font-semibold items-center'>
             <label className='  w-1/4 font-bold' >Subscribers:</label>
             <h1 className='  font-bold'>{currentUser.subscribers?.length || 0}</h1>
             
         </div>
-        <div className='flex gap-5 font-semibold items-center'>
+        <div className='flex gap-[2rem] font-semibold items-center'>
             <label className='  w-1/4 font-bold' >TOTAL VIEWS:</label>
             <h1 className='  font-bold'>TODO</h1>
             
         </div>
-        <div className='flex gap-5 font-semibold items-center'>
+        <div className='flex gap-[2rem] font-semibold items-center'>
             <label className='  w-1/4 font-bold' >TOTAL Videos:</label>
             <h1 className='  font-bold'>{currentUser.videos.length}</h1>
             
         </div>
-        <div className='flex gap-5 font-semibold items-center w-full h-full'>
+        <div className='flex gap-8 font-semibold items-center w-full h-full'>
             <label className='  w-1/4 font-bold' >BIO:</label>
             <div className='h-full '>
                 { !editing ? (
@@ -190,7 +192,7 @@ const SettingsPage = () => {
                     
                     <textarea
                       value={bio || ''}
-                        className='rounded-md  py-1 px-1 focus:outline-none border-2 focus:bg-slate-500 focus:border-slate-600 border-transparent bg-slate-300 text-white transition-all'
+                        className='rounded-md w-full py-1 px-1 focus:outline-none border-2 focus:bg-slate-500 focus:border-slate-600 border-transparent bg-slate-300 text-white transition-all'
                         rows={10}
                         cols={40}
                         onChange={(e) => setBio(() => e.target.value)}
