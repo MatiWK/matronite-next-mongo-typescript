@@ -16,6 +16,16 @@ export async function createUser(user: IUser) {
     }
 }
 
+export async function getUserById(id: Types.ObjectId) {
+    try {
+        await dbConnect();
+        const user = await User.findById(id)
+        return JSON.parse(JSON.stringify(user))
+    } catch (err) {
+        console.log(err)
+    }
+}
+
 
 export async function getUserByUserName(searchQuery: string) {
     try {

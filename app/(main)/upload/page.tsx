@@ -55,7 +55,7 @@ const UploadVideo = () => {
 
             // PRODUCTION : https://matronite-next-mongo-typescript.vercel.app/api/upload
             // LOCAL: http://localhost:3000/api/upload
-            const response = await axios.post("https://matronite-next-mongo-typescript.vercel.app/api/upload", data, {
+            const response = await axios.post("http://localhost:3000/api/upload", data, {
                 headers: {
                     Authorization: `Bearer ${token}`,  // Attach Clerk token to the request
                     'Content-Type': 'application/json'  // Ensure the correct content type

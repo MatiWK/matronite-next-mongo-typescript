@@ -2,9 +2,10 @@
 
 import Video, { IVideo } from "@/models/Video"
 import dbConnect from "../mongoose"
-import { IUser } from "@/models/User"
+import User, { IUser } from "@/models/User"
 import { NextResponse } from "next/server"
 import { Types } from "mongoose"
+import { getUserById, getUserByUserName } from "./user.action"
 
 export async function getVideosByUserId(user: IUser) {
     try {
@@ -43,7 +44,7 @@ export async function getVideosByUsers(users: IUser[]) {
     for (let user of users) {
         videoIds.push(...user.videos)
     }
-    console.log(videoIds)
+    
 
     try {
         await dbConnect()
@@ -53,9 +54,10 @@ export async function getVideosByUsers(users: IUser[]) {
                 $in: videoIds
             }
         }).sort({views: -1})
+        .populate('user')
 
-        console.log(videos)
 
+        
         return JSON.parse(JSON.stringify(videos))
     } catch (error) {
         console.log(error)

@@ -65,13 +65,13 @@ const VideoPage = () => {
 
       </div>
       <div className='flex gap-2 items-center w-3/4'>
-      <div className='border-[3px] border-black rounded-full h-[50px]  aspect-square relative'>
+      <div className='border-[3px] border-black rounded-full h-[50px]  w-[50px] relative'>
             <Image
             
             src={user.photo}
             fill
             alt={user?.clerkId}
-            className='rounded-full shadow-xl'
+            className='rounded-full shadow-xl object-cover object-center'
             />
         </div>
         <div className='flex flex-col gap-0'>

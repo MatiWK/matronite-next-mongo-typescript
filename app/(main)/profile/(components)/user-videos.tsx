@@ -14,7 +14,7 @@ const UserVideos = ({
 }: userVideoProps) => {
   return (
     <div className='2xl:w-[1050px] xl+1:w-[900px]  md+1:w-[750px]  md:w-[700px] w-[80%]  mx-auto'>
-      <div className='grid lg:grid-cols-3 md:grid-cols-2 gap-3 py-16  '>
+      <div className='grid lg:grid-cols-3 md:grid-cols-2 gap-5 py-16  '>
       {videos.map((video: IVideo) => (
     <Link 
         href={"/video/" + video._id}
