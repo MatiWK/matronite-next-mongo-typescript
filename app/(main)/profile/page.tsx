@@ -8,7 +8,6 @@ import React, { useEffect, useState } from 'react'
 import UserVideos from './(components)/user-videos'
 import { IVideo } from '@/models/Video'
 import { getVideosByUserId } from '@/lib/actions/video.actions'
-import { PlayCircleIcon } from 'lucide-react'
 
 const Profile = () => {
     const [currentUser, setCurrentUser] = useState<IUser | null>()
@@ -32,6 +31,12 @@ const Profile = () => {
     
 
     if (!currentUser) return null
+    
+    if (videos[0]) {
+      if (currentUser._id !== videos[0].user) return null
+    }
+    
+
   return (
     <div className='w-full h-full'> 
       <div className='relative bg-black md+1:aspect-[5/1] aspect-[4/1] 2xl:w-[1050px] xl+1:w-[900px]  md+1:w-[750px]    mx-auto md+1:mt-16 mb-8 rounded-2xl flex justify-center items-center'>

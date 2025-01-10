@@ -21,7 +21,7 @@ const SubscribedVideo = ({
         href={"/video/" + video._id}
         key={video._id?.toString()}
     >
-        <div className='group bg-black rounded-xl aspect-video relative hover:scale-110 transition-all'>
+        <div className='group bg-black rounded-xl aspect-video relative hover:scale-110 transition-all shadow-2xl'>
             <Image 
                 alt="thumbnail"
                 src={video.thumbnailUrl}
@@ -35,25 +35,29 @@ const SubscribedVideo = ({
                 width={80} 
             />
         </div>
-        <div className='p-1 text-white flex justify-between items-center'>
-          <div className='flex items-end gap-2'>
-            <div className='relative h-[50px] w-[50px] bg-black rounded-full border-2 border-black'>
+        <div className='p-1 text-white flex xl+1:flex-row xl+1:justify-between   flex-col-reverse gap-2'>
+          <div className='flex items-start gap-2'>
+            <div className='relative min-h-[50px] min-w-[50px] bg-black rounded-full  border-2 border-black'>
+              <Link href={`/channel/${video.user.username}`}>
               <Image 
               src={video.user.photo}
               alt="avatar"
               fill
-              className='rounded-full border-2 border-black object-cover object-center'
+              className='rounded-full border-2 border-black object-cover object-center  '
               />
+              </Link>
             </div>
             <div className=' text-left flex flex-col '>
               <h1 className='font-semibold text-lg '>{video.title.length < 30 ? video.title : `${video.title.substring(0,30)}...`} </h1>
-              <h2 className='font-thin text-sm'>
+              <Link href={`/channel/${video.user.username}`}>
+              <h2 className='font-thin text-xs'>
                 {video.user.username !== null && video.user.username.length < 20 ? video.user.username : `${video.user.username?.substring(0,20)}...`}
               </h2>
+              </Link>
             </div>
             
           </div>
-          <p className='text-sm'>Views: {video.views}</p>
+          <p className='text-sm font-semibold text-nowrap text-left '>Views: {video.views}</p>
         </div>
         
     </Link>

@@ -4,7 +4,7 @@ import Video, { IVideo } from "@/models/Video"
 import dbConnect from "../mongoose"
 import User, { IUser } from "@/models/User"
 import { NextResponse } from "next/server"
-import { Types } from "mongoose"
+import { ObjectId, Types } from "mongoose"
 import { getUserById, getUserByUserName } from "./user.action"
 
 export async function getVideosByUserId(user: IUser) {
@@ -95,6 +95,27 @@ export async function getVideosById(users: IUser[]) {
     }
 }
 
+export async function updateVideo(video: IVideo) {
+    try {
+        await dbConnect()
+        const updatedVideo: IVideo | null = await Video.findOneAndUpdate({_id: video._id}, {title: video.title, thumbnailUrl: video.thumbnailUrl})
+        return JSON.parse(JSON.stringify(updatedVideo))
+    } catch (error) {
+        console.log(error)
+    }
+}
 
+export async function deleteVideoById(video: IVideo) {
+    try {
+        await dbConnect()
+        const deletedVideo: IVideo | null = await Video.findByIdAndDelete(video._id)
 
-
+        const updatedUser: IUser | null = await User.findOneAndUpdate(
+            {_id: video.user},
+            { $pull: {videos: video._id}}
+        )
+        return JSON.parse(JSON.stringify(deletedVideo))
+    } catch (error) {
+        console.error(error)
+    }
+}

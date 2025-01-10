@@ -8,6 +8,7 @@ export interface IVideo {
     views?: number;
     title: string;
     user: Types.ObjectId | IUser;  // Reference to the user who uploaded the video
+    createdOn?: Date;
 }
 
 const videoSchema = new Schema<IVideo>({
@@ -15,7 +16,8 @@ const videoSchema = new Schema<IVideo>({
     thumbnailUrl: { type: String },
     views: { type: Number, default: 0 },
     title: { type: String, required: true },
-    user: { type: Types.ObjectId, ref: 'User' }  // Add a reference to the User model
+    user: { type: Types.ObjectId, ref: 'User' },  // Add a reference to the User model
+    createdOn: {type: Date, default: Date.now}
 });
 
 const Video = models.Video || model<IVideo>("Video", videoSchema);

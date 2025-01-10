@@ -16,6 +16,7 @@
     "axios": "^1.7.3",
     "class-variance-authority": "^0.7.0",
     "clsx": "^2.1.1",
+    "framer-motion": "^11.16.1",
     "lucide-react": "^0.426.0",
     "mime": "^4.0.4",
     "mongodb": "^6.8.0",
@@ -25,6 +26,7 @@
     "react": "^18",
     "react-dom": "^18",
     "react-hot-toast": "^2.4.1",
+    "react-spinners": "^0.15.0",
     "svix": "^1.28.0",
     "tailwind-merge": "^2.4.0",
     "tailwindcss-animate": "^1.0.7"

@@ -6,9 +6,9 @@ import { IVideo } from '@/models/Video'
 import Image from 'next/image'
 import { useParams, useRouter } from 'next/navigation'
 import React, { useEffect, useState } from 'react'
-import UserVideos from '../../profile/(components)/user-videos'
 import { Button } from '@/components/ui/button'
 import Link from 'next/link'
+import UserVideos from './(components)/user-videos'
 
 const ChannelPage = () => {
     const [user, setUser] = useState<IUser | null>(null)
@@ -132,7 +132,7 @@ const ChannelPage = () => {
       }
       </div>
 
-      <UserVideos 
+      <UserVideos
       videos={videos}
       />
       

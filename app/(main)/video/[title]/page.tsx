@@ -39,11 +39,11 @@ const VideoPage = () => {
     if (!user) return null
     if (!currentUser) return null;
 
-
+    
   return (
     <div className='py-16 px-8'>
       
-      <div className=' md+1:min-h-[400px] sm:min-h-[300px] min-h-[200px] w-full relative aspect-video bg-black '>
+      <div className='md+1:min-h-[400px] sm:min-h-[300px] min-h-[200px] w-full  relative aspect-video bg-black '>
       
         {video && (
             <video controls

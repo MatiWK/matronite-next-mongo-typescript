@@ -4,7 +4,6 @@ import { getVideosByUsers } from '@/lib/actions/video.actions'
 import { IUser } from '@/models/User'
 import { IVideo } from '@/models/Video'
 import React, { useEffect, useState } from 'react'
-import UserVideos from '../profile/(components)/user-videos'
 import { Types } from 'mongoose'
 import SubscribedVideo from './(components)/subscribed-video'
 

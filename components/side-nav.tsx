@@ -17,8 +17,10 @@ const SideNav = () => {
     getUser()
   }, [])
 
+
+  // got rid of "fixed" in first div 
   return (
-    <div className='min-h-screen w-[15%] bg-black shadow-xl hidden  lg+1:flex flex-col fixed'>
+    <div className='min-h-screen w-[15%] bg-black shadow-xl hidden  lg+1:flex flex-col '>
       <Link href="/community">
         <div>
             <h1 className='text-slate-300 font-bold text-3xl p-5 pb-8 '>Matronite</h1>
